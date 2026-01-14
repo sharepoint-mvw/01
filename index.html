@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Changelog - MVW01</title>
+
+    <style>
+      :root {
+        --primary-color: #0056b3;
+        --secondary-color: #f4f4f9;
+        --text-color: #333;
+        --border-color: #ddd;
+        --correction-color: #dc3545;
+        --improvement-color: #ffc107;
+        --feature-color: #28a745;
+        --deprecated-color: #6a1b9a;
+        --removed-color: #000;
+        --security-color: #ff5722;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.2em;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+
+      .error-box {
+        background: #fff0f0;
+        color: #a00;
+        border-left: 5px solid red;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+      }
+
+      .version-section {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        margin-bottom: 25px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .version-header {
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .change-item {
+        display: flex;
+        margin-bottom: 15px;
+        align-items: flex-start;
+      }
+
+      .change-type {
+        min-width: 120px;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 0.8em;
+        text-align: center;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+
+      .type-fixed {
+        background-color: var(--correction-color);
+        color: white;
+      }
+
+      .type-changed {
+        background-color: var(--improvement-color);
+        color: #000;
+      }
+
+      .type-added {
+        background-color: var(--feature-color);
+        color: white;
+      }
+
+      .type-deprecated {
+        background-color: var(--deprecated-color);
+        color: white;
+      }
+
+      .type-removed {
+        background-color: var(--removed-color);
+        color: white;
+      }
+
+      .type-security {
+        background-color: var(--security-color);
+        color: white;
+      }
+
+      .type-default {
+        background-color: #888;
+        color: white;
+      }
+
+      .palliative-note {
+        font-style: italic;
+        color: #808080;
+        margin-top: 5px;
+        font-size: 0.9em;
+        border-left: 3px solid #ccc;
+        padding-left: 8px;
+      }
+
+      /* Adicione isso ao seu bloco <style> */
+      .change-item a {
+        color: var(--primary-color);
+        text-decoration: none;
+        border-bottom: 1px dotted var(--primary-color);
+        font-weight: bold;
+      }
+
+      .change-item a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1 id="project-name">MVW01</h1>
+      <p>Versão Atual: <span id="current-version"></span></p>
+    </header>
+
+    <div class="container">
+      <div id="validation-errors"></div>
+      <div id="changelog-container"></div>
+    </div>
+
+    <script>
+      //----------------------------------------------------
+      // Suporte a vários tipos conhecidos
+      //----------------------------------------------------
+      const TYPE_MAP = {
+        fixed: "type-fixed",
+        correction: "type-fixed",
+        changed: "type-changed",
+        improvement: "type-changed",
+        added: "type-added",
+        feature: "type-added",
+        deprecated: "type-deprecated",
+        removed: "type-removed",
+        security: "type-security",
+      };
+
+      //----------------------------------------------------
+      // NOVO: Função auxiliar para converter links MD em HTML
+      //----------------------------------------------------
+      function parseInlineMarkdown(text) {
+        if (!text) return "";
+        // Regex para encontrar [texto](url) e substituir por <a href="url">texto</a>
+        // O target="_blank" faz abrir em nova aba
+        return text.replace(
+          /\[([^\]]+)\]\(([^)]+)\)/g,
+          '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+        );
+      }
+
+      //----------------------------------------------------
+      // Parser Markdown robusto (ATUALIZADO)
+      //----------------------------------------------------
+      function parseMarkdown(mdText) {
+        const errors = [];
+        const lines = mdText.split("\n");
+
+        const versionRegex = /^## \[(.*?)\] - (.*)$/;
+        const typeRegex = /^### (.*)$/;
+        const summaryRegex = /^- summary:\s*(.*)$/i;
+        const detailsRegex = /^- details:\s*(.*)$/i;
+        const noteRegex = /^- note:\s*(.*)$/i;
+
+        let currentVersionBlock = null;
+        let currentType = null;
+        let currentChange = null;
+
+        const changelog = [];
+
+        function pushVersion() {
+          if (!currentVersionBlock) return;
+          if (currentVersionBlock.changes.length === 0) {
+            errors.push(
+              `⚠ Versão ${currentVersionBlock.version} não possui entradas válidas.`
+            );
+          }
+          changelog.push(currentVersionBlock);
+        }
+
+        lines.forEach((raw, index) => {
+          const line = raw.trim();
+          const lineNumber = index + 1;
+
+          if (!line) return;
+
+          // Detecta nova versão
+          const vMatch = versionRegex.exec(line);
+          if (vMatch) {
+            pushVersion();
+            currentVersionBlock = {
+              version: vMatch[1],
+              release_date: vMatch[2],
+              changes: [],
+            };
+            currentType = null;
+            currentChange = null;
+            return;
+          }
+
+          // Detecta tipo
+          const tMatch = typeRegex.exec(line);
+          if (tMatch) {
+            const rawType = tMatch[1].trim().toLowerCase();
+            currentType = rawType;
+
+            if (!TYPE_MAP[rawType]) {
+              errors.push(
+                `⚠ Tipo desconhecido na linha ${lineNumber}: "${rawType}"`
+              );
+            }
+
+            currentChange = null;
+            return;
+          }
+
+          // summary (AGORA COM parseInlineMarkdown)
+          const sMatch = summaryRegex.exec(line);
+          if (sMatch) {
+            if (!currentVersionBlock) {
+              errors.push(`⚠ summary sem versão na linha ${lineNumber}`);
+              return;
+            }
+            if (!currentType) {
+              errors.push(`⚠ summary sem ### tipo acima (linha ${lineNumber})`);
+              return;
+            }
+
+            currentChange = {
+              type: currentType,
+              summary: parseInlineMarkdown(sMatch[1]), // <--- Alterado aqui
+              details: [],
+              palliative: [],
+            };
+            currentVersionBlock.changes.push(currentChange);
+            return;
+          }
+
+          // details (AGORA COM parseInlineMarkdown)
+          const dMatch = detailsRegex.exec(line);
+          if (dMatch) {
+            if (!currentChange) {
+              errors.push(`⚠ details sem summary acima (linha ${lineNumber})`);
+              return;
+            }
+            currentChange.details.push(parseInlineMarkdown(dMatch[1]));
+            return;
+          }
+
+          // note (AGORA COM parseInlineMarkdown)
+          const nMatch = noteRegex.exec(line);
+          if (nMatch) {
+            if (!currentChange) {
+              errors.push(`⚠ note sem summary acima (linha ${lineNumber})`);
+              return;
+            }
+            currentChange.palliative.push(parseInlineMarkdown(nMatch[1]));
+            return;
+          }
+
+          errors.push(`⚠ Linha ignorada (inválida): ${line}`);
+        });
+
+        pushVersion();
+
+        const lastVersion = changelog[0]?.version || "";
+
+        return {
+          project_name: "MVW01",
+          current_version: lastVersion,
+          changelog,
+          errors,
+        };
+      }
+
+      //----------------------------------------------------
+      // Renderização HTML do changelog
+      //----------------------------------------------------
+      function renderChangelog(data) {
+        document.getElementById("project-name").textContent = data.project_name;
+        document.getElementById("current-version").textContent =
+          data.current_version;
+
+        const c = document.getElementById("changelog-container");
+        c.innerHTML = "";
+
+        data.changelog.forEach((v) => {
+          const section = document.createElement("div");
+          section.className = "version-section";
+
+          section.innerHTML = `
+            <div class="version-header">
+              <h2>Versão ${v.version}</h2>
+              <span>${v.release_date}</span>
+            </div>
+          `;
+
+          v.changes.forEach((ch) => {
+            const typeClass = TYPE_MAP[ch.type] || "type-default";
+            const div = document.createElement("div");
+            div.className = "change-item";
+
+            // CÓDIGO CORRIGIDO (Iterando sobre o array palliative)
+            div.innerHTML = `
+              <div class="change-type ${typeClass}">${ch.type.toUpperCase()}</div>
+              <div>
+                <strong>${ch.summary}</strong>
+                ${ch.details.map((d) => `<p>${d}</p>`).join("")} 
+                ${
+                  ch.palliative && ch.palliative.length > 0
+                    ? ch.palliative
+                        .map((n) => `<div class="palliative-note">${n}</div>`)
+                        .join("")
+                    : ""
+                }
+              </div>
+            `;
+
+            section.appendChild(div);
+          });
+
+          c.appendChild(section);
+        });
+      }
+
+      //----------------------------------------------------
+      // Mostrar erros de validação do MD
+      //----------------------------------------------------
+      function renderValidationErrors(errors) {
+        const box = document.getElementById("validation-errors");
+        if (errors.length === 0) {
+          box.innerHTML = "";
+          return;
+        }
+        box.innerHTML = `
+          <div class="error-box">
+            <h3>⚠ Problemas detectados no Markdown:</h3>
+            <ul>
+              ${errors.map((e) => `<li>${e}</li>`).join("")}
+            </ul>
+          </div>
+        `;
+      }
+
+      //----------------------------------------------------
+      // Carregar o MD
+      //----------------------------------------------------
+      fetch("CHANGELOG_MVW.md")
+        .then((r) => r.text())
+        .then((text) => {
+          const data = parseMarkdown(text);
+          renderValidationErrors(data.errors);
+          renderChangelog(data);
+        })
+        .catch((err) => {
+          document.getElementById("changelog-container").innerHTML = `
+            <div class="error-box">
+              ❌ Erro ao carregar o arquivo CHANGELOG_MVW.md
+            </div>
+          `;
+        });
+    </script>
+  </body>
+</html>
