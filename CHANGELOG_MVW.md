@@ -3,7 +3,7 @@
 ### Added
 
 - summary: C7.17.1 Protections | Electric arc detection
-- details: New parameter for configuring arc flash protection
+- details: New parameter for configuring electric arc protection channels
 
 ## [5.03.02] - 2025-12-05
 
