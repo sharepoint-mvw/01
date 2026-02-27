@@ -10,7 +10,7 @@
 
 - summary: Feature Update: HMI notifications
 - details: Added support for on-screen HMI notifications
-- note: Reference ticket: [MVW-892](https://jiracloudweg.atlassian.net/browse/MVW-892)
+- note: [INTERNAL] Reference ticket: [MVW-892](https://jiracloudweg.atlassian.net/browse/MVW-892)
 
 ### Added
 
