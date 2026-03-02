@@ -247,15 +247,15 @@ body.admin-mode .secret-item::before {
       <h1 id="project-name">MVW01</h1>
       <p>Current Version: v<span id="current-version"></span></p>
 
-<!-- NOVO: Área de Login -->
-  <div class="login-container" id="login-area">
-    <input type="password" id="admin-pass" placeholder="Senha interna" />
-    <button onclick="checkPassword()">Entrar</button>
-  </div>
-  <!-- Mensagem de sucesso (oculta inicialmente) -->
-  <div id="admin-msg" style="display:none; color: #81d4fa; margin-top:5px;">
-    Modo Engenharia Ativado
-  </div>
+      <!-- NOVO: Área de Login -->
+      <div class="login-container" id="login-area">
+        <input type="password" id="admin-pass" placeholder="Password" />
+        <button onclick="checkPassword()">Login</button>
+      </div>
+      <!-- Mensagem de sucesso (oculta inicialmente) -->
+      <div id="admin-msg" style="display:none; color: #81d4fa; margin-top:5px;">
+        Engineering Mode Enabled
+      </div>
     </header>
 
     <div class="container">
@@ -437,7 +437,6 @@ const AUTHORIZED_USERS = [
 function checkPassword() {
   const inputField = document.getElementById('admin-pass');
   // Pegamos o valor, removemos espaços em branco nas pontas e convertemos para minúsculo
-  // Isso evita erros se o usuário digitar "Juliano@weg.net" com J maiúsculo.
   const inputLogin = inputField.value.trim().toLowerCase();
 
   // Verifica se o que foi digitado existe na nossa lista
@@ -451,9 +450,9 @@ function checkPassword() {
     const msgDiv = document.getElementById('admin-msg');
     msgDiv.style.display = 'block';
     //msgDiv.textContent = `Modo Engenharia Ativado: ${inputLogin}`; // Mostra quem logou
-    msgDiv.textContent = `Modo Engenharia Ativado`; // Mostra quem logou
+    msgDiv.textContent = `Engineering Mode Enabled`; // Mostra quem logou
   } else {
-    alert("E-mail ou senha não autorizados!");
+    alert("Unauthorized!");
     inputField.value = ""; // Limpa o campo
     inputField.focus();    // Coloca o foco de volta para tentar de novo
   }
