@@ -2,9 +2,21 @@
 
 ### Added
 
+- summary: Network Bridge Configuration
+- details: Added interface support for configuring the network bridge mode on the HMI ethernet communication ports
+- note: Note: This configuration does not affect the AUI board Ethernet ports
+
+### Deprecated
+
+- summary: HMI Serial Communication
+- details: The serial communication interface information has been deprecated (Menu/ Config./ Comm. Settings/ Serial)
+- note: Note: The RS-485 serial configuration is fixed and exclusively dedicated to communication with the AUI board. The RS-232 interface has no functionality in this product
+
+### Added
+
 - summary: Feature Update: Temperature units
 - details: Added a field to select the temperature unit (°C or °F)
-- note: Note: The selected unit is stored retentively and applies to all HMI temperature parameters
+- note: Note: The selected unit is stored retentively and applies to all temperature parameters
 
 ### Added
 
