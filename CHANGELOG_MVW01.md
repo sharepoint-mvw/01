@@ -35,7 +35,8 @@
 - details: Fixed an issue where the serial number was not saved if configured while the motor was running
 - note: Note: Without a valid serial number configured, the HMI will prompt for it again upon the next startup
 
-## [5.03.04] - Unreleased
+## [5.03.04] - 2026-03-23
+- url: https://weg365.sharepoint.com/:u:/t/BR-WAU-INDENG-SWFWAPP/IQCpEkrmmEPPT6l6GzMunR9bAbBeUBWF75E6MZolysiOmcg?e=Amf5xT
 
 ### Changed
 
@@ -73,6 +74,7 @@
 - details: Added parameter to display CCE board temperature, distinguishing it from AUI CPU temperature data
 
 ## [5.03.03] - 2026-01-14
+- url: https://weg365.sharepoint.com/:u:/t/BR-WAU-INDENG-SWFWAPP/IQAnRQzKAGgrRJInJn7D8BlAAfJUW4m9sUDkwhy-cpYLpO0?e=A9vxuz
 
 ### Added
 
@@ -80,6 +82,7 @@
 - details: Introduced configuration parameters for electric arc protection channels
 
 ## [5.03.02] - 2025-12-05
+- url: https://weg365.sharepoint.com/:u:/t/BR-WAU-INDENG-SWFWAPP/IQDGznX6oTwxSYqanUIPdWYkAdSWLVzKsEm7GTI5zFMOd5g?e=I0YRkr
 
 ### Fixed
 
