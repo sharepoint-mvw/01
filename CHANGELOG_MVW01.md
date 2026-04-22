@@ -1,4 +1,5 @@
 ## [5.03.05] - Unreleased
+- package: HMI=5.03.06, AUI=5.03.06, CCE=5.03.06, CCE FPGA=1.01.00, CIB=x.xx.xx
 
 ### Added
 
@@ -37,6 +38,7 @@
 
 ## [5.03.04] - 2026-03-23
 - url: https://weg365.sharepoint.com/:u:/t/BR-WAU-INDENG-SWFWAPP/IQCpEkrmmEPPT6l6GzMunR9bAbBeUBWF75E6MZolysiOmcg?e=Amf5xT
+- package: HMI=5.03.04, AUI=5.03.04, CCE=5.03.06, CCE FPGA=1.01.00
 
 ### Changed
 
@@ -75,6 +77,7 @@
 
 ## [5.03.03] - 2026-01-14
 - url: https://weg365.sharepoint.com/:u:/t/BR-WAU-INDENG-SWFWAPP/IQAnRQzKAGgrRJInJn7D8BlAAfJUW4m9sUDkwhy-cpYLpO0?e=A9vxuz
+- package: HMI=5.03.03, AUI=5.03.03, CCE=5.03.03, CCE FPGA=1.01.00
 
 ### Added
 
@@ -83,6 +86,7 @@
 
 ## [5.03.02] - 2025-12-05
 - url: https://weg365.sharepoint.com/:u:/t/BR-WAU-INDENG-SWFWAPP/IQDGznX6oTwxSYqanUIPdWYkAdSWLVzKsEm7GTI5zFMOd5g?e=I0YRkr
+- package: HMI=5.03.02, AUI=5.03.02, CCE=5.03.02, CCE FPGA=1.01.00
 
 ### Fixed
 
