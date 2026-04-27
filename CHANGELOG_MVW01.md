@@ -1,5 +1,25 @@
-## [5.03.05] - Unreleased
-- package: HMI=5.03.06, AUI=5.03.06, CCE=5.03.06, CCE FPGA=1.01.00, CIB=x.xx.xx
+## [5.03.09] - 2026/04/27
+- url: https://weg365.sharepoint.com/:u:/t/BR-WAU-INDENG-SWFWAPP/IQD9GZIM3ziyRa2U13x5qOzRAUtnLp1w1ofyaA7351WBTAQ?e=RQrfj8
+- package: HMI=5.03.09, AUI=5.03.09, CCE=5.03.09, CCE FPGA=1.01.00
+
+### Added
+
+- summary: Operation with AFE rectifier
+- details: Added support for operation with an Active Front End (AFE) rectifier on the mains connection
+- note: Menu related to this function: C1.2.5 – Operating mode
+
+### Added
+
+- summary: STO (Safe Torque Off)
+- details: Added support for the Safe Torque Off function
+- note: Alarm related to this function: A2703 Inverter in Safe Torque Off (STO) state
+
+### Added
+
+- summary: Network Bridge Configuration
+- details: Added interface support for configuring the network bridge mode on the HMI ethernet communication ports
+- note: Note: This configuration does not affect the AUI board Ethernet ports
+
 
 ### Added
 
