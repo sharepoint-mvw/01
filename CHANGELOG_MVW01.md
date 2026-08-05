@@ -1,3 +1,55 @@
+## [5.03.17] - 2026/07/31
+- url: https://weg365.sharepoint.com/:u:/r/teams/BR-WAU-INDENG-SWFWAPP/Documentos%20Compartilhados/Medium%20Voltage%20Drives/MVW01/v5.03/mvw01%20v5.03.17.zip?d=wce8f2197e1e2493c91586a204f46fa2c&csf=1&web=1&e=liBSO3
+- package: HMI=5.03.17, AUI=5.03.17, CCE=5.03.17, CCE FPGA=1.01.01
+
+### Added
+
+- summary: Feature Update: Sensorless Vector Control
+- details: Implemented support and parameters for Sensorless Vector Control, including motor voltage estimation and flystart functionality adaptations
+- note: Parameters related to this function: C3.3.11 Output voltage estimator, C3.8.3.2 Initial search frequency. [INTERNAL] Reference tickets: [MVW-950](https://jiracloudweg.atlassian.net/browse/MVW-950), [MVW-984](https://jiracloudweg.atlassian.net/browse/MVW-984)
+
+### Added
+
+- summary: Feature Update: Input power processing
+- details: Added support for accurate input power processing in regenerative drives
+- note: [INTERNAL] Reference ticket: [MVW-979](https://jiracloudweg.atlassian.net/browse/MVW-979)
+
+### Added
+
+- summary: Feature Update: Active Front End (RB) mode
+- details: Added support for operation with an Active Front End (RB) rectifier, enabling bi-directional power control and regenerative capabilities
+- note: [INTERNAL] Reference ticket: [MVW-853](https://jiracloudweg.atlassian.net/browse/MVW-853)
+
+### Added
+
+- summary: Feature Update: External Torque/Current Limitation
+- details: Added support for limiting external torque and current via an analog input signal (-10 V to +10 V), primarily for master/slave load division applications
+- note: [INTERNAL] Reference ticket: [MVW-944](https://jiracloudweg.atlassian.net/browse/MVW-944)
+
+### Changed
+
+- summary: Improvement: Rectifier PLL and Power Processing
+- details: Refactored the power processing structure, added a filter to the rectifier PLL frequency signal, and fixed the PWM enable behavior related to the PLL synchronization signal
+- note: [INTERNAL] Reference ticket: [MVW-943](https://jiracloudweg.atlassian.net/browse/MVW-943)
+
+### Changed
+
+- summary: Improvement: STO DI debouncing configuration
+- details: Increased the Safe Torque Off (STO) digital input debouncing time, allowing the inverter more time to restart the auxiliary power supply and exit the STO state
+- note: [INTERNAL] No reference ticket
+
+### Changed
+
+- summary: Improvement: Heavy Duty (HD) HSM routines
+- details: Updated the Hardware State Machine (HSM) routines when the inverter is configured to operate in Heavy Duty (HD) mode
+- note: [INTERNAL] No reference ticket
+
+### Fixed
+
+- summary: Bug Fix: Communication with CIB Fault (F0360)
+- details: Resolved an intermittent issue that caused the inverter to sporadically trigger the CIB Communication Fault (F0360) during normal operation
+- note: [INTERNAL] Reference ticket: [MVW-809](https://jiracloudweg.atlassian.net/browse/MVW-809)
+
 ## [5.03.09] - 2026/04/27
 - url: https://weg365.sharepoint.com/:u:/t/BR-WAU-INDENG-SWFWAPP/IQD9GZIM3ziyRa2U13x5qOzRAUtnLp1w1ofyaA7351WBTAQ?e=RQrfj8
 - package: HMI=5.03.09, AUI=5.03.09, CCE=5.03.09, CCE FPGA=1.01.00
