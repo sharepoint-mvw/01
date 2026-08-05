@@ -36,13 +36,11 @@
 
 - summary: Improvement: STO DI debouncing configuration
 - details: Increased the Safe Torque Off (STO) digital input debouncing time, allowing the inverter more time to restart the auxiliary power supply and exit the STO state
-- note: [INTERNAL] No reference ticket
 
 ### Changed
 
 - summary: Improvement: Heavy Duty (HD) HSM routines
 - details: Updated the Hardware State Machine (HSM) routines when the inverter is configured to operate in Heavy Duty (HD) mode
-- note: [INTERNAL] No reference ticket
 
 ### Fixed
 
